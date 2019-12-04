@@ -1,0 +1,4 @@
+<div class="container" appInViewport (inViewportChange)="loadContent($event)">
+  <div class="id">{{id}}</div>
+  <div class="content">{{content | async}}</div>
+</div>
