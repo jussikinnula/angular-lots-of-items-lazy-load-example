@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
+import pLimit from 'p-limit';
 
 interface Content {
   [key: string]: string;
@@ -19,11 +20,11 @@ export class ChuckNorrisService {
   private content: Content = {};
   private contentSubject: BehaviorSubject<Content>;
   private contentObservable: Observable<Content>;
+  private limit = pLimit(3);
 
   constructor(private http: HttpClient) {
     this.contentSubject = new BehaviorSubject(this.content);
     this.contentObservable = this.contentSubject.asObservable();
-    console.log('init', this.contentSubject, this.contentObservable);
   }
 
   getContent(id: number): Observable<string> {
@@ -34,12 +35,11 @@ export class ChuckNorrisService {
       );
   }
 
-  loadContent(id: number): void {
-    this.apiRequest().subscribe(res => {
-      this.content[id] = res.body.value;
-      this.contentSubject.next(this.content);
-    });
-
+  async loadContent(id: number): Promise<string> {
+    const res = await this.limit(() => this.apiRequest().toPromise());
+    this.content[id] = res.body.value;
+    this.contentSubject.next(this.content);
+    return this.content[id];
   }
 
   private apiRequest(): Observable<HttpResponse<ChuckNorrisResponse>> {
