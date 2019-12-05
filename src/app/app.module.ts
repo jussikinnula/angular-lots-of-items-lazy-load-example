@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 
 import { AppComponent } from './app.component';
 import { ListComponent } from './components/list/list.component';
@@ -19,7 +20,8 @@ import { InViewportDirective } from './directives/in-viewport/in-viewport.direct
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    VirtualScrollerModule
   ],
   providers: [ChuckNorrisService],
   bootstrap: [AppComponent]

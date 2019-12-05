@@ -1,1 +1,3 @@
-<app-item *ngFor="let id of items" [id]="id"></app-item>
+<virtual-scroller #scroll [items]="items">
+  <app-item *ngFor="let id of scroll.viewPortItems" [id]="id"></app-item>
+</virtual-scroller>

@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  margin-top: 40px;
+  background-color: purple
+}
+
+virtual-scroller {
+  width: 100%;
+  height: calc(100vh - 50px);
+}
