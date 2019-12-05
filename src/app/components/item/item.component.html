@@ -1,4 +1,6 @@
 <div class="container" appInViewport (inViewportChange)="loadContent($event)">
   <div class="id">{{id}}</div>
+  <div *ngIf="queued | async" class="status">Loading queued...</div>
+  <div *ngIf="loading | async" class="status">Loading started...</div>
   <div class="content">{{content | async}}</div>
 </div>
